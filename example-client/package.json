@@ -1,0 +1,14 @@
+{
+  "name": "example-client",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "terminal-image": "^3.0.0",
+    "typescript": "^5.0.0"
+  }
+}

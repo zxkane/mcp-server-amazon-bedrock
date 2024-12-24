@@ -1,0 +1,37 @@
+{
+  "name": "mcp-server-amazon-bedrock",
+  "version": "0.1.0",
+  "description": "Use Amazon Bedrock models to generate text, image and videos",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "mcp-server-amazon-bedrock": "./build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.716.0",
+    "@aws-sdk/credential-providers": "^3.716.0",
+    "@modelcontextprotocol/sdk": "0.6.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "mcp",
+    "amazon",
+    "bedrock",
+    "ai",
+    "image-generation"
+  ],
+  "license": "MIT"
+}
