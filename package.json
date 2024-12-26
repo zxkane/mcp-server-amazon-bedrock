@@ -1,6 +1,6 @@
 {
-  "name": "mcp-server-amazon-bedrock",
-  "version": "0.1.0",
+  "name": "@zxkane/mcp-server-amazon-bedrock",
+  "version": "0.1.1",
   "description": "Use Amazon Bedrock Nova models to generate image.",
   "author": "Kane Zhu",
   "type": "module",
