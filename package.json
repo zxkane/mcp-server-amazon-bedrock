@@ -1,8 +1,8 @@
 {
   "name": "mcp-server-amazon-bedrock",
   "version": "0.1.0",
-  "description": "Use Amazon Bedrock models to generate text, image and videos",
-  "private": true,
+  "description": "Use Amazon Bedrock Nova models to generate image.",
+  "author": "Kane Zhu",
   "type": "module",
   "bin": {
     "mcp-server-amazon-bedrock": "./build/index.js"
@@ -10,6 +10,9 @@
   "files": [
     "build"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
     "prepare": "npm run build",
