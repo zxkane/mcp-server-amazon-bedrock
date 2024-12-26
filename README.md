@@ -1,26 +1,26 @@
 # Amazon Bedrock MCP Server
 
-An MCP server that provides access to Amazon Bedrock's Nova Canvas model for AI image generation.
+A Model Control Protocol (MCP) server that integrates with Amazon Bedrock's Nova Canvas model for AI image generation.
 
 ## Features
 
-- Generate images from text descriptions using Amazon's Nova Canvas model
-- Support for negative prompts to guide what to avoid in the image
-- Configurable image dimensions and quality settings
-- Reproducible generation with seed control
-- Comprehensive input validation and error handling
+- High-quality image generation from text descriptions using Amazon's Nova Canvas model
+- Advanced control through negative prompts to refine image composition
+- Flexible configuration options for image dimensions and quality
+- Deterministic image generation with seed control
+- Robust input validation and error handling
 
 ## Prerequisites
 
-1. An AWS account with access to Amazon Bedrock and Nova Canvas model
-2. AWS credentials configured with appropriate permissions
-3. Node.js 18 or higher
+1. Active AWS account with Amazon Bedrock and Nova Canvas model access
+2. Properly configured AWS credentials with required permissions
+3. Node.js version 18 or later
 
 ## Installation
 
-### AWS Credentials Setup
+### AWS Credentials Configuration
 
-The server requires AWS credentials with permissions to access Amazon Bedrock. You can provide these in several ways:
+The server requires AWS credentials with appropriate Amazon Bedrock permissions. Configure these using one of the following methods:
 
 1. Environment variables:
    ```bash
@@ -31,29 +31,38 @@ The server requires AWS credentials with permissions to access Amazon Bedrock. Y
 
 2. AWS credentials file (`~/.aws/credentials`):
    ```ini
-   [default]
+   [the_profile_name]
    aws_access_key_id = your_access_key
    aws_secret_access_key = your_secret_key
    ```
+   Environment variable for active profile:
+   ```bash
+   export AWS_PROFILE=the_profile_name
+   ```
 
-3. IAM role (if running on AWS)
+3. IAM role (when deployed on AWS infrastructure)
 
-### Claude Desktop Configuration
+### Claude Desktop Integration
 
-To use this with Claude Desktop, add the following to your configuration file:
+To integrate with Claude Desktop, add the following configuration to your settings file:
 
-On MacOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
+MacOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
     "amazon-bedrock": {
-      "command": "/path/to/mcp-server-amazon-bedrock/build/index.js",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@zxkane/mcp-server-amazon-bedrock"
+      ],
       "env": {
-        "AWS_ACCESS_KEY_ID": "your_access_key", // optional if using AWS credentials file or IAM role
-        "AWS_SECRET_ACCESS_KEY": "your_secret_key", // optional if using AWS credentials file or IAM role
-        "AWS_REGION": "us-east-1" // optional, the default region is 'us-east-1'
+        "AWS_PROFILE": "your_profile_name",         // Optional, only if you want to use a specific profile
+        "AWS_ACCESS_KEY_ID": "your_access_key",     // Optional if using AWS credentials file or IAM role
+        "AWS_SECRET_ACCESS_KEY": "your_secret_key", // Optional if using AWS credentials file or IAM role
+        "AWS_REGION": "us-east-1"                   // Optional, defaults to 'us-east-1'
       }
     }
   }
@@ -64,20 +73,20 @@ On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 
 ### generate_image
 
-Generates an image from a text description using Amazon Bedrock's Nova Canvas model.
+Creates images from text descriptions using Amazon Bedrock's Nova Canvas model.
 
 #### Parameters
 
-- `prompt` (required): Text description of the image to generate (1-1024 characters)
-- `negativePrompt` (optional): Text description of what to avoid in the image (1-1024 characters)
-- `width` (optional): Width of the generated image (default: 1024)
-- `height` (optional): Height of the generated image (default: 1024)
-- `quality` (optional): Image quality, either "standard" or "premium" (default: "standard")
-- `cfg_scale` (optional): How closely to follow the prompt (1.1-10, default: 6.5)
-- `seed` (optional): Seed for reproducible generation (0-858993459, default: 12)
-- `numberOfImages` (optional): Number of images to generate (1-5, default: 1)
+- `prompt` (required): Descriptive text for the desired image (1-1024 characters)
+- `negativePrompt` (optional): Elements to exclude from the image (1-1024 characters)
+- `width` (optional): Image width in pixels (default: 1024)
+- `height` (optional): Image height in pixels (default: 1024)
+- `quality` (optional): Image quality level - "standard" or "premium" (default: "standard")
+- `cfg_scale` (optional): Prompt adherence strength (1.1-10, default: 6.5)
+- `seed` (optional): Generation seed for reproducibility (0-858993459, default: 12)
+- `numberOfImages` (optional): Batch size for generation (1-5, default: 1)
 
-#### Example Usage
+#### Example Implementation
 
 ```typescript
 const result = await callTool('generate_image', {
@@ -89,43 +98,29 @@ const result = await callTool('generate_image', {
 });
 ```
 
-#### Note on Prompts
+#### Prompt Guidelines
 
-Avoid using negating words ("no", "not", "without", etc.) in your prompts. Instead of including "no mirrors" or "without mirrors" in the prompt, use "mirrors" in the negativePrompt field.
+For optimal results, avoid negative phrasing ("no", "not", "without") in the main prompt. Instead, move these elements to the `negativePrompt` parameter. For example, rather than using "a landscape without buildings" in the prompt, use "buildings" in the `negativePrompt`.
 
-See [Nova Canvas documentation][nova-canvas-doc] for more information on detail usages.
-
-## Error Handling
-
-The server includes comprehensive error handling for:
-
-- Invalid parameters (with specific validation messages)
-- AWS credential issues
-- Network connectivity problems
-- Model availability issues
-- Rate limiting
-- Content moderation (images that don't align with AWS RAI policy)
-
-Error messages are returned in a user-friendly format with suggestions for resolution.
+For detailed usage guidelines, refer to the [Nova Canvas documentation][nova-canvas-doc].
 
 ## Development
 
-To build and run the server locally:
+To set up and run the server in a local environment:
 
 ```bash
 git clone https://github.com/zxkane/mcp-server-amazon-bedrock.git
 cd mcp-server-amazon-bedrock
 npm install
 npm run build
-npm start
 ```
 
-### Important Note on Timeouts
+### Performance Considerations
 
-Resolution (`width` and `height`), `numberOfImages`, and `quality` all impact generation time. When using higher values for these parameters, generation might exceed default timeouts. Consider this when making requests.
+Generation time is influenced by resolution (`width` and `height`), `numberOfImages`, and `quality` settings. When using higher values, be mindful of potential timeout implications in your implementation.
 
 ## License
 
-MIT License - see LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 [nova-canvas-doc]: https://docs.aws.amazon.com/nova/latest/userguide/image-gen-access.html
