@@ -2,6 +2,8 @@
 
 A Model Control Protocol (MCP) server that integrates with Amazon Bedrock's Nova Canvas model for AI image generation.
 
+<a href="https://glama.ai/mcp/servers/9qw7dwpvj9"><img width="380" height="200" src="https://glama.ai/mcp/servers/9qw7dwpvj9/badge" alt="Amazon Bedrock Server MCP server" /></a>
+
 ## Features
 
 - High-quality image generation from text descriptions using Amazon's Nova Canvas model
