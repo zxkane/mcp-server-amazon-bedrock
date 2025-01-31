@@ -1,0 +1,29 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - awsAccessKeyId
+      - awsSecretAccessKey
+    properties:
+      awsAccessKeyId:
+        type: string
+        description: Your AWS Access Key ID for Amazon Bedrock access.
+      awsSecretAccessKey:
+        type: string
+        description: Your AWS Secret Access Key for Amazon Bedrock access.
+      awsRegion:
+        type: string
+        default: us-east-1
+        description: The AWS region to use for Amazon Bedrock.
+      awsProfile:
+        type: string
+        default: default
+        description: The AWS profile to use from the AWS credentials file.
+  commandFunction:
+    # A function that produces the CLI command to start the MCP on stdio.
+    |-
+    (config) => ({command: 'node', args: ['build/index.js'], env: {AWS_ACCESS_KEY_ID: config.awsAccessKeyId, AWS_SECRET_ACCESS_KEY: config.awsSecretAccessKey, AWS_REGION: config.awsRegion, AWS_PROFILE: config.awsProfile}})
