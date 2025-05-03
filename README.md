@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/zxkane-mcp-server-amazon-bedrock-badge.png)](https://mseep.ai/app/zxkane-mcp-server-amazon-bedrock)
+
 # Amazon Bedrock MCP Server
 
 A Model Control Protocol (MCP) server that integrates with Amazon Bedrock's Nova Canvas model for AI image generation.
