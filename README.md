@@ -2,6 +2,8 @@
 
 # Amazon Bedrock MCP Server
 
+[![smithery badge](https://smithery.ai/badge/mcp-server-amazon-bedrock)](https://smithery.ai/server/mcp-server-amazon-bedrock)
+
 A Model Control Protocol (MCP) server that integrates with Amazon Bedrock's Nova Canvas model for AI image generation.
 
 <a href="https://glama.ai/mcp/servers/9qw7dwpvj9"><img width="380" height="200" src="https://glama.ai/mcp/servers/9qw7dwpvj9/badge" alt="Amazon Bedrock Server MCP server" /></a>
@@ -21,6 +23,14 @@ A Model Control Protocol (MCP) server that integrates with Amazon Bedrock's Nova
 3. Node.js version 18 or later
 
 ## Installation
+
+### Installing via Smithery
+
+To install Amazon Bedrock MCP Server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/mcp-server-amazon-bedrock):
+
+```bash
+npx -y @smithery/cli install mcp-server-amazon-bedrock --client claude
+```
 
 ### AWS Credentials Configuration
 
